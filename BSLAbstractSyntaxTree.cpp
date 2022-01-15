@@ -124,7 +124,7 @@ int Precedence(TokenTypes token)
 	case TokenTypes::DivisionSign:
 		return 2;
 	case TokenTypes::DotSign:
-		return 20;
+		return 0;
 	}
 
 	return -1;

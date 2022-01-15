@@ -20,7 +20,9 @@ enum class ASTNodeTypes
 	ForLoop,
 	WhileLoop,
 	SubprogramCall,
-	NumericConstant
+	NumericConstant,
+	Unparsed,
+	UnparsedExpression,
 };
 
 class IAbstractSyntaxTreeNode
@@ -42,6 +44,11 @@ public:
 	void AddNode(IAbstractSyntaxTreeNode* pNode)
 	{
 		m_Nodes.push_back(pNode);
+	}
+
+	ASTNodeTypes Type()
+	{
+		return m_nodeType;
 	}
 
 protected:
@@ -74,6 +81,43 @@ public:
 	NumericConstantTreeNode(double value) : IAbstractSyntaxTreeNode(ASTNodeTypes::NumericConstant)
 	{
 		m_Value = value;
+	}
+};
+
+class MemberExpressionNode : public IAbstractSyntaxTreeNode
+{
+	IAbstractSyntaxTreeNode* m_LeftNode;
+	IAbstractSyntaxTreeNode* m_RightNode;
+public:
+	MemberExpressionNode(IAbstractSyntaxTreeNode * left, IAbstractSyntaxTreeNode * right) : IAbstractSyntaxTreeNode(ASTNodeTypes::MemberExpression)
+	{
+		m_LeftNode = left;
+		m_RightNode = right;
+	}
+};
+
+class UnparsedNode : public IAbstractSyntaxTreeNode
+{
+	tokenStreamElement_t* m_Token;
+public:
+	UnparsedNode(tokenStreamElement_t* token) : IAbstractSyntaxTreeNode(ASTNodeTypes::Unparsed)
+	{
+		m_Token = token;
+	}
+
+	TokenTypes TokenType()
+	{
+		return m_Token->type;
+	}
+	
+};
+
+class UnparsedExpression : public IAbstractSyntaxTreeNode
+{
+public:
+	UnparsedExpression(tokenStreamElement_t*) : IAbstractSyntaxTreeNode(ASTNodeTypes::UnparsedExpression)
+	{
+
 	}
 };
 

@@ -104,6 +104,9 @@ typedef struct
 	textHumanPosition_t textPosition;
 
 	bool isStringLiteral;
+
+	bool isFunctionCallHint;
+
 }tokenStreamElement_t;
 
 class TokenStream

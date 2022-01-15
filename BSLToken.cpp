@@ -298,6 +298,7 @@ void TokenStream::PushToken(std::wstring& tokenValue, size_t tokenStartRow, size
 	else
 		elem.type = TokenTypeFromValue(tokenValue);
 	
+	elem.isFunctionCallHint = false;
 	m_Data.push_back(elem);
 
 }
